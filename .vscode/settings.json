@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "xstring": "c",
+        "xutility": "c",
+        "sorting_algorithms.h": "c"
+    }
+}

@@ -7,6 +7,10 @@ struct results {
     double insertion;
     double selection;
     double shell;
+    double quick;
+    double merge;
+    double radix;
+    double heap;
 };
 
 
@@ -20,7 +24,7 @@ int main(void) {
     LARGE_INTEGER frequency, start, end;
 
     QueryPerformanceFrequency(&frequency);
-
+    
     for (len_idx = 0; len_idx < 5; len_idx++)
         for (type_idx = 0; type_idx < 3; type_idx++) {
             struct dataS data;
@@ -44,7 +48,7 @@ int main(void) {
             selectionSort(data.data, data.dataLength);
             QueryPerformanceCounter(&end);
             results.selection = ((double)(end.QuadPart - start.QuadPart)) / frequency.QuadPart * 1000.0;
-
+            
             QueryPerformanceCounter(&start);
             insertionSort(data.data, data.dataLength);
             QueryPerformanceCounter(&end);
@@ -55,6 +59,26 @@ int main(void) {
             QueryPerformanceCounter(&end);
             results.shell = ((double)(end.QuadPart - start.QuadPart)) / frequency.QuadPart * 1000.0;
 
+            QueryPerformanceCounter(&start);
+            quicksort(data.data, 0, data.dataLength-1);
+            QueryPerformanceCounter(&end);
+            results.quick = ((double)(end.QuadPart - start.QuadPart)) / frequency.QuadPart * 1000.0;
+
+            QueryPerformanceCounter(&start);
+            mergesort(data.data, 0, data.dataLength-1);
+            QueryPerformanceCounter(&end);
+            results.merge = ((double)(end.QuadPart - start.QuadPart)) / frequency.QuadPart * 1000.0;
+
+            QueryPerformanceCounter(&start);
+            radixsort(data.data, data.dataLength);
+            QueryPerformanceCounter(&end);
+            results.radix = ((double)(end.QuadPart - start.QuadPart)) / frequency.QuadPart * 1000.0;
+
+            QueryPerformanceCounter(&start);
+            heapsort(data.data, data.dataLength);
+            QueryPerformanceCounter(&end);
+            results.heap = ((double)(end.QuadPart - start.QuadPart)) / frequency.QuadPart * 1000.0;
+ 
             FILE *file;
 
             file = fopen("resultados.txt", "a");
@@ -64,7 +88,7 @@ int main(void) {
                 return 1;
             }
 
-            fprintf(file, "%i;%s;%.6f;%.6f;%.6f;%.6f\n", len_idx, TYPES[type_idx], results.bubble, results.insertion, results.selection, results.shell);
+            fprintf(file, "%i;%s;%.6f;%.6f;%.6f;%.6f;%.6f;%.6f;%.6f;%.6f\n", len_idx, TYPES[type_idx], results.bubble, results.insertion, results.selection, results.shell, results.quick, results.merge, results.radix, results.heap);
 
             fclose(file);
         }

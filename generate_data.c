@@ -7,7 +7,7 @@ int main(void) {
                     1, 300000, 2, 300000, 3, 300000, 1, 500000, 2, 500000, 3, 500000,
                     1, 1000000, 2, 1000000, 3, 1000000};
 
-    const char *command = "generate_data.exe";
+    const char *command = "data_generator.exe";
 
     int numInputs = sizeof(inputs) / sizeof(inputs[0]), i;
 
